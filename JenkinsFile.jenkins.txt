@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+
+    environment {
+        // Path to your Python executable
+        PYTHON = 'C:\\Users\\caong\\AppData\\Local\\Programs\\Python\\Python311\\python.exe'
+        PROJECT_DIR = 'D:\\7.4HD\\Neural_Scan'
+    }
+
+    stages {
+
+        stage('Build') {
+            steps {
+                echo 'Installing dependencies...'
+                // Upgrade pip
+                bat "\"${PYTHON}\" -m pip install --upgrade pip"
+                // Install requirements
+                bat "\"${PYTHON}\" -m pip install -r ${PROJECT_DIR}\\requirements.txt"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Run test.py with pytest
+                bat "\"${PYTHON}\" -m pytest ${PROJECT_DIR}\\test.py"
+            }
+        }
+
+        stage('Code Quality') {
+            steps {
+                echo 'Code quality stage placeholder'
+                // Example: run flake8 or pylint
+            }
+        }
+
+        stage('Security') {
+            steps {
+                echo 'Security scan placeholder'
+                // Example: run bandit for Python security
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploy placeholder'
+                // Example: deploy to test server or docker
+            }
+        }
+
+        stage('Release') {
+            steps {
+                echo 'Release placeholder'
+                // Example: promote to production
+            }
+        }
+
+        stage('Monitoring & Alerting') {
+            steps {
+                echo 'Monitoring placeholder'
+                // Example: integrate Datadog/New Relic
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
